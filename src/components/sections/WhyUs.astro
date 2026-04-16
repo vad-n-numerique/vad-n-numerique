@@ -1,0 +1,52 @@
+---
+import SectionTitle from '../ui/SectionTitle.astro';
+
+const arguments_ = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: 'Expertise technique',
+    description:
+      'Maîtrise des technologies modernes et des bonnes pratiques de développement pour livrer des produits robustes et maintenables.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    title: 'Réactivité',
+    description:
+      "Communication fluide, délais respectés et disponibilité pour s'adapter aux évolutions de vos besoins tout au long du projet.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`,
+    title: 'Qualité livrée',
+    description:
+      'Code propre, testé et documenté. Chaque livrable est soigné, optimisé et conçu pour durer dans le temps.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    title: 'Tarifs justes',
+    description:
+      "Des prix transparents et adaptés à la réalité de votre projet, qu'il s'agisse d'une startup, d'une PME ou d'un particulier.",
+  },
+];
+---
+
+<section class="py-20 md:py-28 bg-dark text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle
+      title="Pourquoi choisir VAD-N ?"
+      subtitle="Une approche directe, des engagements tenus."
+    />
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      {arguments_.map(({ icon, title, description }) => (
+        <div class="fade-in flex gap-5">
+          <div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-primary/20 text-primary">
+            <Fragment set:html={icon} />
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-white mb-2">{title}</h3>
+            <p class="text-white/65 text-sm leading-relaxed">{description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

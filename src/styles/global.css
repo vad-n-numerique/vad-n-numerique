@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  /* Couleurs */
+  --color-primary: #4F46E5;
+  --color-primary-dark: #3730A3;
+  --color-secondary: #F97316;
+  --color-secondary-dark: #EA580C;
+  --color-bg: #F8FAFC;
+  --color-dark: #0F172A;
+  --color-text: #1E293B;
+  --color-muted: #64748B;
+  --color-success: #10B981;
+
+  /* Polices */
+  --font-sans: 'Inter', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Tailles de texte personnalisées */
+  --text-h1: 3rem;
+  --text-h2: 2rem;
+  --text-h3: 1.5rem;
+}
+
+/* Preload des polices Google */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    scroll-behavior: smooth;
+  }
+
+  /* Animations fade-in au scroll */
+  /* Grille de points — fond Hero */
+  .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

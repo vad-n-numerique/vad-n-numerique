@@ -1,0 +1,134 @@
+---
+interface Props {
+  endpoint: string;
+}
+
+const { endpoint } = Astro.props;
+---
+
+<form
+  id="contact-form"
+  action={endpoint}
+  method="POST"
+  class="space-y-6"
+  novalidate
+>
+  <!-- Nom -->
+  <div>
+    <label for="name" class="block text-sm font-semibold text-text mb-1.5">
+      Nom complet <span class="text-secondary" aria-hidden="true">*</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      autocomplete="name"
+      placeholder="Jean Dupont"
+      class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-text placeholder-muted text-sm transition-colors duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+    />
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email" class="block text-sm font-semibold text-text mb-1.5">
+      E-mail <span class="text-secondary" aria-hidden="true">*</span>
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder="jean@exemple.fr"
+      class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-text placeholder-muted text-sm transition-colors duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+    />
+  </div>
+
+  <!-- Sujet -->
+  <div>
+    <label for="subject" class="block text-sm font-semibold text-text mb-1.5">
+      Sujet <span class="text-secondary" aria-hidden="true">*</span>
+    </label>
+    <select
+      id="subject"
+      name="subject"
+      required
+      class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-text text-sm transition-colors duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none"
+    >
+      <option value="" disabled selected>Choisissez un sujet</option>
+      <option value="web">Développement web</option>
+      <option value="software">Logiciel sur mesure</option>
+      <option value="android">Application Android</option>
+      <option value="game">Jeu vidéo</option>
+      <option value="other">Autre</option>
+    </select>
+  </div>
+
+  <!-- Message -->
+  <div>
+    <label for="message" class="block text-sm font-semibold text-text mb-1.5">
+      Message <span class="text-secondary" aria-hidden="true">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="5"
+      placeholder="Décrivez votre projet..."
+      class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-text placeholder-muted text-sm transition-colors duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-vertical"
+    ></textarea>
+  </div>
+
+  <!-- Bouton d'envoi -->
+  <button
+    type="submit"
+    id="submit-btn"
+    class="w-full px-6 py-3.5 rounded-lg bg-primary text-white font-semibold text-sm transition-all duration-200 hover:bg-primary-dark hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+  >
+    Envoyer le message
+  </button>
+
+  <!-- Message de confirmation -->
+  <div id="form-success" class="hidden p-4 rounded-lg bg-success/10 border border-success/30 text-success text-sm font-medium" role="alert">
+    Message envoyé avec succès ! Je vous répondrai dans les meilleurs délais.
+  </div>
+  <div id="form-error" class="hidden p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm font-medium" role="alert">
+    Une erreur est survenue. Veuillez réessayer ou nous contacter directement par e-mail.
+  </div>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const successMsg = document.getElementById('form-success')!;
+  const errorMsg = document.getElementById('form-error')!;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours…';
+    successMsg.classList.add('hidden');
+    errorMsg.classList.add('hidden');
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        form.reset();
+        successMsg.classList.remove('hidden');
+      } else {
+        errorMsg.classList.remove('hidden');
+      }
+    } catch {
+      errorMsg.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Envoyer le message';
+    }
+  });
+</script>

@@ -1,0 +1,43 @@
+---
+import SectionTitle from '../ui/SectionTitle.astro';
+
+const technologies = [
+  { name: 'TypeScript', category: 'Langage' },
+  { name: 'JavaScript', category: 'Langage' },
+  { name: 'Python', category: 'Langage' },
+  { name: 'Kotlin', category: 'Mobile' },
+  { name: 'Java', category: 'Langage' },
+  { name: 'React', category: 'Web' },
+  { name: 'Astro', category: 'Web' },
+  { name: 'Next.js', category: 'Web' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'Android SDK', category: 'Mobile' },
+  { name: 'Unity', category: 'Jeux' },
+  { name: 'Godot', category: 'Jeux' },
+  { name: 'PostgreSQL', category: 'Base de données' },
+  { name: 'Tailwind CSS', category: 'Style' },
+  { name: 'Docker', category: 'DevOps' },
+  { name: 'Git', category: 'DevOps' },
+];
+---
+
+<section class="py-20 md:py-28 bg-bg">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle
+      title="Technologies maîtrisées"
+      subtitle="Un large spectre de compétences pour répondre à tous vos projets."
+    />
+    <div class="flex flex-wrap justify-center gap-3">
+      {technologies.map(({ name, category }) => (
+        <div class="fade-in group relative">
+          <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 text-text shadow-sm transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-md cursor-default">
+            {name}
+          </span>
+          <span class="absolute -top-7 left-1/2 -translate-x-1/2 text-xs bg-dark text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+            {category}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

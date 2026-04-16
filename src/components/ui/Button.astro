@@ -1,0 +1,45 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline';
+  href?: string;
+  type?: 'button' | 'submit';
+  label: string;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  label,
+  class: extraClass = '',
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-primary text-white hover:bg-primary-dark hover:shadow-lg hover:-translate-y-0.5 focus:ring-primary',
+  secondary:
+    'bg-secondary text-white hover:bg-secondary-dark hover:shadow-lg hover:-translate-y-0.5 focus:ring-secondary',
+  outline:
+    'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
+};
+
+const classes = `${base} ${variants[variant]} ${extraClass}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes}>
+      <slot />
+      {label}
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+      {label}
+    </button>
+  )
+}

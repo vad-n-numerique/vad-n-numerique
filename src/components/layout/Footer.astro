@@ -1,0 +1,104 @@
+---
+const navLinks = [
+  { href: '/', label: 'Accueil' },
+  { href: '/mentions-legales', label: 'Mentions légales' },
+];
+
+const socialLinks = [
+  {
+    href: 'https://linkedin.com',
+    label: 'LinkedIn',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+  },
+  {
+    href: 'https://github.com',
+    label: 'GitHub',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
+  },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-dark text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <!-- Colonne 1 : Logo + description -->
+      <div class="space-y-4">
+        <a href="/" aria-label="VAD-N Numérique — Accueil">
+          <img
+            src="/logo.png"
+            alt="VAD-N Numérique"
+            class="h-10 w-auto"
+            width="160"
+            height="40"
+          />
+        </a>
+        <p class="text-sm text-white/70 leading-relaxed">
+          Développement d'applications, de logiciels et de jeux vidéo.
+        </p>
+      </div>
+
+      <!-- Colonne 2 : Navigation -->
+      <div>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4">
+          Navigation
+        </h2>
+        <ul class="space-y-2" role="list">
+          {navLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-sm text-white/70 hover:text-white transition-colors duration-200"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Colonne 3 : Contact + Réseaux -->
+      <div>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4">
+          Contact
+        </h2>
+        <ul class="space-y-2 text-sm text-white/70" role="list">
+          <li>
+            <a
+              href="mailto:contact@vad-n.fr"
+              class="hover:text-white transition-colors duration-200"
+            >
+              contact@vad-n.fr
+            </a>
+          </li>
+        </ul>
+
+        <div class="mt-6 flex items-center gap-4">
+          {socialLinks.map(({ href, label, icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              class="text-white/70 hover:text-white transition-colors duration-200"
+              set:html={icon}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Barre de copyright -->
+    <div class="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+      <p>© {currentYear} VAD-N Numérique. Tous droits réservés.</p>
+      <a
+        href="/mentions-legales"
+        class="hover:text-white/80 transition-colors duration-200"
+      >
+        Mentions légales
+      </a>
+    </div>
+  </div>
+</footer>
