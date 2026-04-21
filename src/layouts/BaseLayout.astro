@@ -90,6 +90,10 @@ const fullTitle = `${title} | VAD-N Numérique`;
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Curseur custom (desktop uniquement) -->
+    <div id="cursor-dot"  aria-hidden="true" style="position:fixed;top:0;left:0;width:6px;height:6px;background:#4F46E5;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,opacity 0.3s;opacity:0;"></div>
+    <div id="cursor-ring" aria-hidden="true" style="position:fixed;top:0;left:0;width:28px;height:28px;border:1.5px solid rgba(79,70,229,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s,border-color 0.2s,opacity 0.3s;opacity:0;"></div>
+
     <!-- Skip to content (accessibilité) -->
     <a
       href="#main-content"
@@ -120,6 +124,56 @@ const fullTitle = `${title} | VAD-N Numérique`;
       );
 
       document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
+
+    <!-- Curseur lumineux custom (desktop uniquement) -->
+    <script>
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      if (!isTouch) {
+        const dot  = document.getElementById('cursor-dot')!;
+        const ring = document.getElementById('cursor-ring')!;
+        let rx = 0, ry = 0; // position anneau (interpolée)
+        let cx = 0, cy = 0; // position réelle curseur
+
+        document.body.style.cursor = 'none';
+
+        document.addEventListener('mousemove', (e) => {
+          cx = e.clientX; cy = e.clientY;
+          dot.style.left  = cx + 'px';
+          dot.style.top   = cy + 'px';
+          dot.style.opacity = '1';
+          ring.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+          dot.style.opacity  = '0';
+          ring.style.opacity = '0';
+        });
+
+        // Anneau suit avec un léger retard
+        (function animRing() {
+          rx += (cx - rx) * 0.12;
+          ry += (cy - ry) * 0.12;
+          ring.style.left = rx + 'px';
+          ring.style.top  = ry + 'px';
+          requestAnimationFrame(animRing);
+        })();
+
+        // Agrandissement sur éléments interactifs
+        const targets = 'a,button,[data-tilt]';
+        document.querySelectorAll(targets).forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            ring.style.width       = '48px';
+            ring.style.height      = '48px';
+            ring.style.borderColor = 'rgba(79,70,229,0.8)';
+          });
+          el.addEventListener('mouseleave', () => {
+            ring.style.width       = '28px';
+            ring.style.height      = '28px';
+            ring.style.borderColor = 'rgba(79,70,229,0.5)';
+          });
+        });
+      }
     </script>
   </body>
 </html>

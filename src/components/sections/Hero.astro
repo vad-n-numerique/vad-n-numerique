@@ -3,23 +3,22 @@
 
 <section class="relative overflow-hidden bg-dark dot-grid text-white pt-14 pb-24 sm:pt-20 sm:pb-36 md:pt-32 md:pb-52">
 
-  <!-- Gradient mesh centré -->
+  <!-- Canvas particules (derrière tout) -->
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+
+  <!-- Gradient mesh -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <!-- Halo principal indigo centré en haut -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-225 h-150 bg-primary/20 rounded-full blur-3xl"></div>
-    <!-- Halo orange bas-gauche -->
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
-    <!-- Halo indigo clair bas-droit -->
-    <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/15 rounded-full blur-2xl translate-y-1/3 translate-x-1/4"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-225 h-150 bg-primary/15 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/8 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+    <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-2xl translate-y-1/3 translate-x-1/4"></div>
   </div>
 
-  <!-- Ligne de séparation basse -->
+  <!-- Ligne basse -->
   <div class="absolute bottom-0 inset-x-0 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
 
   <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center text-center">
 
-      <!-- Logo -->
       <img
         src="/logo.png"
         alt="VAD-N Numérique"
@@ -28,25 +27,141 @@
         height="160"
       />
 
-      <!-- Nom avec gradient subtil -->
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-5">
         <span class="text-transparent bg-clip-text bg-linear-to-r from-white via-slate-100 to-slate-300">
           VAD-N Numérique
         </span>
       </h1>
 
-      <!-- Séparateur indigo -->
       <div class="flex items-center gap-3 mb-5" aria-hidden="true">
         <div class="w-8 h-px bg-primary/50 rounded-full"></div>
         <div class="w-2 h-2 rounded-full bg-primary"></div>
         <div class="w-8 h-px bg-primary/50 rounded-full"></div>
       </div>
 
-      <!-- Tagline -->
-      <p class="text-base md:text-lg text-slate-400 leading-relaxed max-w-md tracking-wide">
-        Développement d'applications, de logiciels et de jeux vidéo.
+      <p class="text-base md:text-lg text-slate-400 leading-relaxed max-w-md tracking-wide min-h-7">
+        <span id="typewriter-text"></span><span id="typewriter-cursor" class="inline-block w-0.5 h-4 bg-primary ml-0.5 align-middle"></span>
       </p>
 
     </div>
   </div>
 </section>
+
+<script>
+  /* ── Typewriter ─────────────────────────────────── */
+  const twText   = document.getElementById('typewriter-text')!;
+  const twCursor = document.getElementById('typewriter-cursor')!;
+  const sentence = "Développement d'applications, de logiciels et de jeux vidéo.";
+  let idx = 0;
+
+  setTimeout(() => {
+    (function type() {
+      if (idx < sentence.length) {
+        twText.textContent += sentence[idx++];
+        setTimeout(type, idx < 5 ? 80 : 28 + Math.random() * 18);
+      } else {
+        let b = 0;
+        const blink = setInterval(() => {
+          twCursor.style.opacity = twCursor.style.opacity === '0' ? '1' : '0';
+          if (++b >= 8) { clearInterval(blink); twCursor.style.opacity = '0'; }
+        }, 380);
+      }
+    })();
+  }, 400);
+
+  /* ── Réseau de particules ────────────────────────── */
+  const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+  const ctx    = canvas.getContext('2d')!;
+  const isMobile = window.innerWidth < 768;
+
+  const COUNT   = isMobile ? 28 : 60;
+  const CONN    = isMobile ? 90 : 130;
+  const REPEL   = 110;
+  const mouse   = { x: -9999, y: -9999 };
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  canvas.closest('section')!.addEventListener('mousemove', (e: MouseEvent) => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  canvas.closest('section')!.addEventListener('mouseleave', () => {
+    mouse.x = -9999; mouse.y = -9999;
+  });
+
+  interface Particle { x: number; y: number; vx: number; vy: number; r: number; alpha: number }
+
+  const particles: Particle[] = Array.from({ length: COUNT }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.55,
+    vy: (Math.random() - 0.5) * 0.55,
+    r: 1.2 + Math.random() * 1.4,
+    alpha: 0.35 + Math.random() * 0.45,
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Mise à jour + dessin des particules
+    for (const p of particles) {
+      // Répulsion douce de la souris
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < REPEL) {
+        const force = (REPEL - dist) / REPEL * 0.6;
+        p.vx += (dx / dist) * force;
+        p.vy += (dy / dist) * force;
+      }
+
+      // Friction + limite de vitesse
+      p.vx *= 0.98;
+      p.vy *= 0.98;
+      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (speed > 1.8) { p.vx = p.vx / speed * 1.8; p.vy = p.vy / speed * 1.8; }
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Rebond sur les bords
+      if (p.x < 0)             { p.x = 0;             p.vx *= -1; }
+      if (p.x > canvas.width)  { p.x = canvas.width;  p.vx *= -1; }
+      if (p.y < 0)             { p.y = 0;             p.vy *= -1; }
+      if (p.y > canvas.height) { p.y = canvas.height; p.vy *= -1; }
+
+      // Point
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,102,241,${p.alpha})`;
+      ctx.fill();
+    }
+
+    // Connexions
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx   = particles[i].x - particles[j].x;
+        const dy   = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONN) {
+          const opacity = (1 - dist / CONN) * 0.25;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(99,102,241,${opacity})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
