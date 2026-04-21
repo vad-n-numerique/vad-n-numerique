@@ -1,112 +1,61 @@
 <div align="center">
 
-<img src="public/logo.png" alt="VAD-N Numérique" width="320" />
+<!-- ═══════════════════════════════════════════════════ HERO -->
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=4F46E5&height=160&section=header&animation=fadeIn" width="100%" />
 
 <br />
 
-# VAD-N Numérique
+<img src="public/logo.png" alt="VAD-N Numérique" width="340" />
 
-**Développement d'applications · Logiciels · Jeux vidéo**
+<h1>VAD-N Numérique</h1>
 
-[![Site en ligne](https://img.shields.io/website?url=https%3A%2F%2Fvad-n.fr&label=vad-n.fr&style=flat-square&color=4F46E5)](https://vad-n.fr)
-[![Astro](https://img.shields.io/badge/Astro-6.x-FF5D01?style=flat-square&logo=astro&logoColor=white)](https://astro.build)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Vercel](https://img.shields.io/badge/Déployé_sur-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=18&pause=1200&color=64748B&center=true&vCenter=true&width=500&lines=Développement+d%27applications;Logiciels+sur+mesure;Jeux+vidéo+2D+%2F+3D)](https://vad-n.fr)
+
+<br />
 
 </div>
 
 ---
 
-## À propos
-
-Site vitrine de **VAD-N Numérique**, entreprise indépendante de développement numérique spécialisée dans :
-
-- **Applications** web et mobiles
-- **Logiciels** desktop et outils métiers
-- **Jeux vidéo** 2D / 3D
-
----
-
-## Stack technique
-
-| Technologie | Rôle |
-|-------------|------|
-| [Astro 6.x](https://astro.build) | Framework SSG — zéro JS par défaut |
-| [Tailwind CSS 4.x](https://tailwindcss.com) | Styles utilitaires via plugin Vite |
-| [TypeScript 5.x](https://www.typescriptlang.org) | Typage strict |
-| [Vercel](https://vercel.com) | Hébergement, CDN, HTTPS automatique |
-
----
-
-## Structure du projet
-
-```
-src/
-├── components/
-│   ├── layout/     # Header, Footer
-│   ├── sections/   # Hero, Services
-│   └── ui/         # Button, Card, SectionTitle, Badge
-├── layouts/
-│   └── BaseLayout.astro
-├── pages/
-│   ├── index.astro
-│   └── mentions-legales.astro
-└── styles/
-    └── global.css
-```
-
----
-
-## Développement local
-
-```bash
-# Installer les dépendances
-npm install
-
-# Lancer le serveur de dev (http://localhost:4321)
-npm run dev
-
-# Vérifier les types
-npx astro check
-
-# Build de production
-npm run build
-
-# Prévisualiser le build
-npm run preview
-```
-
----
-
-## Déploiement
-
-Le site est déployé automatiquement sur **Vercel** à chaque push sur `main`.
-
-```bash
-git push origin main   # → déploiement automatique
-```
-
-Domaine : **[vad-n.fr](https://vad-n.fr)**
-
----
-
-## Fonctionnalités
-
-- Réseau de particules interactif (canvas)
-- Curseur lumineux custom (desktop)
-- Effet typewriter sur la tagline
-- Tilt 3D sur les cartes au survol
-- Animations fade-in au scroll
-- SEO complet (meta, Open Graph, JSON-LD, sitemap)
-- PWA-ready (manifest, theme-color, apple-touch-icon)
-- Score Lighthouse 90+
-- 100% responsive
-
----
+<!-- ════════════════════════════════════════════ NOS ACTIVITÉS -->
 
 <div align="center">
 
-© 2026 VAD-N Numérique · [vad-n.fr](https://vad-n.fr)
+## Nos activités
+
+*Trois domaines de développement, une même exigence technique.*
+
+</div>
+
+<br />
+
+**💻 &nbsp;Applications**
+
+> Développement d'applications web et mobiles. Interfaces modernes, architectures solides, déploiement multiplateforme.
+
+**🖥️ &nbsp;Logiciels**
+
+> Conception de logiciels desktop et d'outils métiers. Solutions pensées pour durer, maintenables et adaptées aux usages réels.
+
+**🎮 &nbsp;Jeux vidéo**
+
+> Développement de jeux 2D et 3D pour PC, mobile ou web. De la conception du gameplay à l'intégration des assets.
+
+---
+
+<!-- ══════════════════════════════════════════════════ FOOTER -->
+
+<div align="center">
+
+<img src="public/logo.png" alt="VAD-N Numérique" width="120" />
+
+[vad-n.fr](https://vad-n.fr) &nbsp;·&nbsp; [contact@vad-n.fr](mailto:contact@vad-n.fr) &nbsp;·&nbsp; [Mentions légales](https://vad-n.fr/mentions-legales)
+
+<br />
+
+© 2026 VAD-N Numérique · Tous droits réservés.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=4F46E5&height=100&section=footer&animation=fadeIn" width="100%" />
 
 </div>
